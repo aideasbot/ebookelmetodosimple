@@ -1,0 +1,1239 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Método Simple para Automatizar Pedidos Gastronómicos</title>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '885375774576573');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=885375774576573&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --naranja: #F5A623;
+    --naranja-oscuro: #D4881A;
+    --rojo: #E63946;
+    --rojo-oscuro: #C1121F;
+    --verde-wa: #25D366;
+    --verde-wa-oscuro: #1DA851;
+    --crema: #FFF8EE;
+    --gris-suave: #F4F1EB;
+    --gris-medio: #8A8A8A;
+    --texto: #1A1A1A;
+    --blanco: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--crema);
+    color: var(--texto);
+    overflow-x: hidden;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, #1a0a00 0%, #2d1200 40%, #1a0a00 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(245,166,35,0.12) 0%, transparent 70%);
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 50px 24px 40px;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .badge-top {
+    display: inline-block;
+    background: var(--naranja);
+    color: #1a0a00;
+    font-weight: 900;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 4px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(44px, 6vw, 72px);
+    line-height: 1.0;
+    color: var(--blanco);
+    letter-spacing: 1px;
+  }
+
+  .hero h1 span {
+    color: var(--naranja);
+    display: block;
+  }
+
+  .hero-sub {
+    color: #d4c5b0;
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 20px 0 28px;
+    max-width: 500px;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 30px;
+  }
+
+  .hero-tag {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(245,166,35,0.3);
+    color: #d4c5b0;
+    font-size: 13px;
+    padding: 5px 12px;
+    border-radius: 20px;
+  }
+
+  /* ===== PRODUCT CARD ===== */
+  .product-card {
+    background: var(--blanco);
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    text-align: center;
+    position: relative;
+  }
+
+  .product-card::before {
+    content: '🔥 MÁS VENDIDO';
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--rojo);
+    color: white;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    padding: 5px 16px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .product-img {
+    width: 100%;
+    max-width: 280px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+  }
+
+  .price-block {
+    margin: 12px 0;
+  }
+
+  .price-old {
+    text-decoration: line-through;
+    color: var(--gris-medio);
+    font-size: 15px;
+  }
+
+  .price-new {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: var(--rojo);
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+
+  .price-new span {
+    font-size: 28px;
+  }
+
+  .price-label {
+    font-size: 13px;
+    color: var(--gris-medio);
+    margin-top: 2px;
+  }
+
+  /* ===== FORM en product card ===== */
+  .buy-form {
+    margin-top: 14px;
+  }
+
+  .buy-form input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e0d8;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    margin-bottom: 10px;
+    outline: none;
+    transition: border-color 0.2s;
+    background: var(--gris-suave);
+  }
+
+  .buy-form input:focus {
+    border-color: var(--naranja);
+    background: white;
+  }
+
+  .btn-comprar {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--verde-wa), var(--verde-wa-oscuro));
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+    text-decoration: none;
+    margin-top: 4px;
+  }
+
+  .btn-comprar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(37,211,102,0.5);
+  }
+
+  .btn-comprar:active {
+    transform: translateY(0);
+  }
+
+  .wa-icon {
+    width: 26px;
+    height: 26px;
+    fill: white;
+    flex-shrink: 0;
+  }
+
+  .delivery-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #555;
+    font-weight: 700;
+  }
+
+  /* ===== URGENCY BAR ===== */
+  .urgency-bar {
+    background: var(--rojo);
+    color: white;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+  }
+
+  .urgency-bar span {
+    background: #fff;
+    color: var(--rojo);
+    padding: 2px 10px;
+    border-radius: 4px;
+    margin: 0 4px;
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 24px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--texto);
+    letter-spacing: 1px;
+  }
+
+  .section-title em {
+    color: var(--naranja-oscuro);
+    font-style: normal;
+  }
+
+  /* ===== ANTES / DESPUES ===== */
+  .before-after {
+    background: white;
+    border-radius: 0;
+    padding: 60px 24px;
+  }
+
+  .ba-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .ba-card {
+    border-radius: 16px;
+    padding: 28px;
+  }
+
+  .ba-card.antes {
+    background: #fff0f0;
+    border: 2px solid #fcc;
+  }
+
+  .ba-card.despues {
+    background: #f0fff4;
+    border: 2px solid #9de9b0;
+  }
+
+  .ba-card h3 {
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ba-card.antes h3 { color: var(--rojo); }
+  .ba-card.despues h3 { color: #1a7a40; }
+
+  .ba-card ul {
+    list-style: none;
+  }
+
+  .ba-card ul li {
+    font-size: 15px;
+    padding: 5px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.4;
+  }
+
+  .ba-card.antes ul li::before { content: '❌'; flex-shrink: 0; }
+  .ba-card.despues ul li::before { content: '✅'; flex-shrink: 0; }
+
+  /* ===== TEMAS / DOLORES ===== */
+  .temas-bg {
+    background: linear-gradient(160deg, #fff8ee 0%, #fff2d8 100%);
+    padding: 60px 24px;
+  }
+
+  .temas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .tema-card {
+    background: white;
+    border-radius: 14px;
+    padding: 22px 20px;
+    border-left: 5px solid var(--naranja);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: transform 0.2s;
+  }
+
+  .tema-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .tema-card .icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  .tema-card h4 {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    color: var(--texto);
+  }
+
+  .tema-card p {
+    font-size: 13.5px;
+    color: #555;
+    line-height: 1.5;
+  }
+
+  /* ===== PARA QUIEN ===== */
+  .para-quien {
+    background: white;
+    padding: 60px 24px;
+  }
+
+  .pq-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .pq-item {
+    background: var(--gris-suave);
+    border: 2px solid var(--naranja);
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-weight: 800;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ===== GARANTIA ===== */
+  .garantia-section {
+    background: linear-gradient(135deg, #1a3a1a 0%, #0d2a0d 100%);
+    padding: 60px 24px;
+    text-align: center;
+  }
+
+  .garantia-box {
+    max-width: 620px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    padding: 40px 36px;
+    border: 4px solid #2ecc71;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .garantia-badge {
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(135deg, #2ecc71, #1a7a40);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 36px;
+    box-shadow: 0 8px 24px rgba(46,204,113,0.4);
+  }
+
+  .garantia-box h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    color: #1a7a40;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .garantia-box p {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.7;
+  }
+
+  /* ===== CTA INTERMEDIA ===== */
+  .cta-mid {
+    background: linear-gradient(135deg, var(--naranja), var(--naranja-oscuro));
+    padding: 60px 24px;
+    text-align: center;
+  }
+
+  .cta-mid h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 54px);
+    color: white;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .cta-mid p {
+    color: rgba(255,255,255,0.85);
+    font-size: 17px;
+    margin-bottom: 28px;
+  }
+
+  /* ===== FAQ ===== */
+  .faq-section {
+    background: var(--crema);
+    padding: 60px 24px;
+  }
+
+  .faq-list {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 20px 24px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--texto);
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .faq-arrow {
+    width: 24px;
+    height: 24px;
+    background: var(--naranja);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s;
+    color: white;
+    font-size: 14px;
+    font-weight: 900;
+  }
+
+  .faq-item.open .faq-arrow {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+
+  .faq-item.open .faq-answer {
+    max-height: 300px;
+  }
+
+  .faq-answer p {
+    padding: 0 24px 20px;
+    font-size: 15px;
+    color: #555;
+    line-height: 1.7;
+    border-top: 1px solid #f0ece4;
+    padding-top: 14px;
+  }
+
+  /* ===== FINAL CTA ===== */
+  .final-cta {
+    background: linear-gradient(160deg, #1a0a00 0%, #2d1800 100%);
+    padding: 70px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 30%, rgba(245,166,35,0.1) 0%, transparent 70%);
+  }
+
+  .final-cta-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .final-cta h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 6vw, 62px);
+    color: white;
+    letter-spacing: 1px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .final-cta h2 em {
+    color: var(--naranja);
+    font-style: normal;
+  }
+
+  .final-cta p {
+    color: #c9b89e;
+    font-size: 17px;
+    margin-bottom: 36px;
+  }
+
+  .final-price {
+    margin-bottom: 28px;
+  }
+
+  .final-price .old {
+    font-size: 18px;
+    text-decoration: line-through;
+    color: #888;
+  }
+
+  .final-price .new {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 68px;
+    color: var(--naranja);
+    line-height: 1;
+  }
+
+  .final-price .new span {
+    font-size: 36px;
+  }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+  }
+
+  .modal {
+    background: white;
+    border-radius: 20px;
+    padding: 36px 32px;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    position: relative;
+    animation: modalIn 0.3s ease;
+  }
+
+  @keyframes modalIn {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #888;
+  }
+
+  .modal h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    color: var(--texto);
+  }
+
+  .modal p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+
+  .modal input {
+    width: 100%;
+    padding: 13px 16px;
+    border: 2px solid #e0dbd0;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    margin-bottom: 12px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .modal input:focus {
+    border-color: var(--verde-wa);
+  }
+
+  .btn-modal-comprar {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--verde-wa), var(--verde-wa-oscuro));
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+    transition: transform 0.15s;
+    margin-top: 4px;
+  }
+
+  .btn-modal-comprar:hover {
+    transform: translateY(-2px);
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #111;
+    color: #888;
+    text-align: center;
+    padding: 24px;
+    font-size: 13px;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 720px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .ba-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .product-card {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
+
+  /* PULSE ANIMATION */
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
+    50% { box-shadow: 0 6px 30px rgba(37,211,102,0.8); }
+  }
+
+  .btn-comprar, .btn-modal-comprar {
+    animation: pulse 2s infinite;
+  }
+
+  /* Counter */
+  .counter-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .counter-box {
+    background: var(--rojo);
+    color: white;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    min-width: 54px;
+    text-align: center;
+    letter-spacing: 2px;
+  }
+
+  .counter-sep {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--rojo);
+  }
+
+  .counter-label {
+    font-size: 13px;
+    color: #888;
+    margin-top: 4px;
+    display: block;
+  }
+
+  .counter-col {
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- URGENCY BAR -->
+<div class="urgency-bar">
+  ⚡ OFERTA LIMITADA — Quedan solo <span id="stock-count">11</span> unidades al precio especial
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="badge-top">📲 Guía práctica para gastronomía</div>
+      <h1>
+        Automatizá tus pedidos
+        <span>por WhatsApp</span>
+        y vendé más sin el caos
+      </h1>
+      <p class="hero-sub">
+        Dejá de responder siempre lo mismo, perder pedidos incompletos y apagar incendios en hora pico. 
+        Este método paso a paso te ordena el negocio en 48 horas.
+      </p>
+      <div class="hero-tags">
+        <span class="hero-tag">🍕 Restaurantes</span>
+        <span class="hero-tag">🥡 Rotiserías</span>
+        <span class="hero-tag">☕ Cafeterías</span>
+        <span class="hero-tag">🌮 Food Trucks</span>
+        <span class="hero-tag">🏠 Dark Kitchens</span>
+        <span class="hero-tag">🚀 Emprendimientos</span>
+      </div>
+
+      <!-- Countdown -->
+      <div class="counter-row">
+        <div class="counter-col">
+          <div class="counter-box" id="cnt-h">00</div>
+          <span class="counter-label">Horas</span>
+        </div>
+        <div class="counter-sep">:</div>
+        <div class="counter-col">
+          <div class="counter-box" id="cnt-m">00</div>
+          <span class="counter-label">Minutos</span>
+        </div>
+        <div class="counter-sep">:</div>
+        <div class="counter-col">
+          <div class="counter-box" id="cnt-s">00</div>
+          <span class="counter-label">Segundos</span>
+        </div>
+      </div>
+      <p style="font-size:13px;color:#c9b89e;margin-bottom:0;">⏰ El precio sube cuando termina el contador</p>
+    </div>
+
+    <!-- PRODUCT CARD -->
+    <div class="product-card">
+      <img 
+        src="/mnt/user-data/uploads/1779886933471_image.png" 
+        alt="El Método Simple para Automatizar Pedidos Gastronómicos" 
+        class="product-img"
+      >
+      <div class="price-block">
+        <div class="price-old">Precio regular: $29.900</div>
+        <div class="price-new"><span>$</span>17.900</div>
+        <div class="price-label">Pago único · Acceso inmediato · Sin suscripción</div>
+      </div>
+
+      <div class="buy-form">
+        <input type="text" id="hero-name" placeholder="Tu nombre" autocomplete="name">
+        <input type="email" id="hero-email" placeholder="Tu correo electrónico" autocomplete="email">
+        <button class="btn-comprar" onclick="comprar('hero')">
+          <svg class="wa-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+          QUIERO COMPRAR AHORA
+        </button>
+        <div class="delivery-info">
+          ✉️ &nbsp;Envío inmediato a tu mail · Cualquier país
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANTES / DESPUES -->
+<section class="before-after">
+  <div class="section">
+    <h2 class="section-title">¿Te suena <em>este caos</em> todos los días?</h2>
+    <div class="ba-grid">
+      <div class="ba-card antes">
+        <h3>😩 Antes del Método</h3>
+        <ul>
+          <li>Clientes que preguntan "¿qué tienen?" y se enfrían</li>
+          <li>Pedidos incompletos que te hacen perder tiempo</li>
+          <li>PDF pesado que nadie abre bien en el celular</li>
+          <li>Errores de dirección y sabor en cocina</li>
+          <li>Respondés lo mismo 30 veces por día</li>
+          <li>En hora pico, todo es un desastre</li>
+          <li>Ventas perdidas que no sabés ni cuántas son</li>
+        </ul>
+      </div>
+      <div class="ba-card despues">
+        <h3>🚀 Después del Método</h3>
+        <ul>
+          <li>El cliente elige solo y llega con el pedido armado</li>
+          <li>Pedidos completos, sin ir y volver</li>
+          <li>Menú digital claro con botón de WhatsApp</li>
+          <li>Menos errores de cocina, más producción</li>
+          <li>Respuestas rápidas guardadas listas para usar</li>
+          <li>Flujo ordenado incluso en hora pico</li>
+          <li>Más cierres en menos tiempo</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUE VAS A APRENDER -->
+<section class="temas-bg">
+  <div style="max-width:900px;margin:0 auto;padding:0 0">
+    <h2 class="section-title">Lo que vas a dominar<br><em>con este ebook</em></h2>
+    <div class="temas-grid">
+      <div class="tema-card">
+        <div class="icon">📱</div>
+        <h4>Menú digital que vende solo</h4>
+        <p>Estructura exacta de categorías, fotos y precios para que el cliente decida rápido sin preguntarte nada.</p>
+      </div>
+      <div class="tema-card">
+        <div class="icon">💬</div>
+        <h4>Botón de WhatsApp con mensaje prearmado</h4>
+        <p>El pedido llega con nombre, dirección y forma de pago. Vos solo confirmás y cobrás.</p>
+      </div>
+      <div class="tema-card">
+        <div class="icon">⚡</div>
+        <h4>Respuestas rápidas listas para copiar</h4>
+        <p>Plantillas de bienvenida, fuera de horario, delivery, pago y confirmación. Todo a mano con un atajo.</p>
+      </div>
+      <div class="tema-card">
+        <div class="icon">🏷️</div>
+        <h4>Sistema de etiquetas para no perder pedidos</h4>
+        <p>Organizá cada chat por estado: nuevo, confirmado, en preparación, en camino y entregado.</p>
+      </div>
+      <div class="tema-card">
+        <div class="icon">🔁</div>
+        <h4>Guion completo de atención paso a paso</h4>
+        <p>Desde que el cliente escribe hasta que te deja reseña. Sin improvisar, sin errores.</p>
+      </div>
+      <div class="tema-card">
+        <div class="icon">📈</div>
+        <h4>Automatización en 3 niveles</h4>
+        <p>Gratis y simple para arrancar. Flujo profesional cuando crezcás. Chatbot/API para negocios con alto volumen.</p>
+      </div>
+      <div class="tema-card">
+        <div class="icon">💰</div>
+        <h4>Mensajes de venta adicional</h4>
+        <p>Frases concretas para sumar bebida, postre o combo y aumentar el ticket promedio por pedido.</p>
+      </div>
+      <div class="tema-card">
+        <div class="icon">🛡️</div>
+        <h4>Checklist de pedido perfecto</h4>
+        <p>10 puntos que hay que confirmar antes de cocinar para eliminar errores y reclamos de una vez.</p>
+      </div>
+      <div class="tema-card">
+        <div class="icon">🎁</div>
+        <h4>Bonus: Prompts de IA para descripciones</h4>
+        <p>Copiá y pegá para mejorar la descripción de cualquier plato y vender más con palabras apetitosas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUIEN ES -->
+<section class="para-quien">
+  <div class="section" style="padding-top:0;padding-bottom:0">
+    <h2 class="section-title">Este ebook es para vos si tenés…</h2>
+    <div class="pq-list">
+      <div class="pq-item">🍕 Restaurante</div>
+      <div class="pq-item">🥡 Rotisería</div>
+      <div class="pq-item">☕ Cafetería o Bar</div>
+      <div class="pq-item">🏠 Dark Kitchen</div>
+      <div class="pq-item">🌮 Food Truck</div>
+      <div class="pq-item">📦 Servicio de catering</div>
+      <div class="pq-item">🍱 Viandas y delivery propio</div>
+      <div class="pq-item">🚀 Emprendimiento gastronómico</div>
+    </div>
+    <p style="text-align:center;margin-top:28px;font-size:17px;color:#555;font-weight:700;">
+      Si recibís pedidos por WhatsApp y querés ordenar el caos → <span style="color:var(--rojo);">esto es para vos.</span>
+    </p>
+  </div>
+</section>
+
+<!-- CTA INTERMEDIA -->
+<section class="cta-mid">
+  <h2>Dejá de perder pedidos hoy mismo</h2>
+  <p>Descargalo ahora y empezá a implementar en menos de 48 horas</p>
+  <button class="btn-comprar" style="max-width:400px;margin:0 auto;font-size:20px;padding:20px;" onclick="abrirModal()">
+    <svg class="wa-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:28px;height:28px">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+    SÍ, QUIERO EL MÉTODO AHORA — $17.900
+  </button>
+  <p style="margin-top:16px;font-size:14px;color:rgba(255,255,255,0.8);">✉️ Entrega inmediata por mail · Cualquier país · Garantía 7 días</p>
+</section>
+
+<!-- GARANTIA -->
+<section class="garantia-section">
+  <div class="garantia-box">
+    <div class="garantia-badge">🛡️</div>
+    <h2>Garantía de 7 días</h2>
+    <p>
+      Si en los primeros <strong>7 días</strong> sentís que el ebook no aportó valor a tu negocio, 
+      te devolvemos el 100% del dinero. Sin preguntas, sin vueltas.<br><br>
+      Queremos que implementes el método con tranquilidad y confianza. 
+      Tu satisfacción es nuestra única prioridad. 
+      <strong>Riesgo cero para vos.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div style="max-width:720px;margin:0 auto">
+    <h2 class="section-title">Preguntas <em>frecuentes</em></h2>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          ¿Cómo recibo el ebook después de comprar?
+          <div class="faq-arrow">+</div>
+        </button>
+        <div class="faq-answer">
+          <p>De forma inmediata. Apenas completás la compra vía WhatsApp, te enviamos el ebook directamente a tu correo electrónico en menos de minutos. No importa en qué país estés: llegamos a cualquier parte del mundo.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          ¿Necesito saber de tecnología o marketing?
+          <div class="faq-arrow">+</div>
+        </button>
+        <div class="faq-answer">
+          <p>No. El método está diseñado para gastronómicos que no tienen tiempo ni ganas de aprender tecnología complicada. Todo arranca con WhatsApp Business y herramientas gratuitas que ya existen. Paso a paso, sin tecnicismos.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          ¿Sirve si recibo pocos pedidos por día?
+          <div class="faq-arrow">+</div>
+        </button>
+        <div class="faq-answer">
+          <p>Sí, especialmente en ese caso. Ordenar el proceso desde el principio te evita malos hábitos que después son difíciles de cambiar. Además, al aplicar el método vas a ver cómo crece la cantidad de pedidos cerrados.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          ¿Puedo leerlo desde el celular?
+          <div class="faq-arrow">+</div>
+        </button>
+        <div class="faq-answer">
+          <p>Sí. El ebook es un archivo digital que podés abrir desde cualquier dispositivo: celular, tablet o computadora. No necesitás imprimir nada ni instalar apps especiales.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          ¿Qué pasa si no me sirve?
+          <div class="faq-arrow">+</div>
+        </button>
+        <div class="faq-answer">
+          <p>Tenés 7 días de garantía total. Si sentís que el contenido no fue de valor para tu negocio, te devolvemos el 100% del dinero sin ninguna pregunta. Es nuestra forma de decirte que confiamos en lo que enseñamos.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          ¿Funciona para cualquier tipo de negocio gastronómico?
+          <div class="faq-arrow">+</div>
+        </button>
+        <div class="faq-answer">
+          <p>Sí. Restaurantes, rotiserías, cafeterías, bares, dark kitchens, food trucks, catering, viandas y cualquier emprendimiento que tome pedidos por WhatsApp. El método es adaptable a cualquier formato.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          ¿Cuánto tiempo tarda en dar resultados?
+          <div class="faq-arrow">+</div>
+        </button>
+        <div class="faq-answer">
+          <p>El ebook incluye un plan de acción de 48 horas. En ese tiempo podés tener configurado el menú digital, el mensaje de bienvenida, las respuestas rápidas y los botones de pedido. Los resultados se notan desde el primer día de uso.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-inner">
+    <h2>Hoy mismo podés tener<br><em>el negocio ordenado</em></h2>
+    <p>Pedidos completos, menos caos, más ventas. Todo empieza con este método simple.</p>
+    <div class="final-price">
+      <div class="old">Antes: $29.900</div>
+      <div class="new"><span>$</span>17.900</div>
+    </div>
+    <button class="btn-comprar" style="max-width:420px;margin:0 auto;font-size:19px;padding:20px 30px;" onclick="abrirModal()">
+      <svg class="wa-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:28px;height:28px">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+      </svg>
+      COMPRAR POR WHATSAPP — $17.900
+    </button>
+    <p style="margin-top:16px;color:#888;font-size:14px;">🛡️ Garantía 7 días · ✉️ Envío inmediato por mail · 🌎 Todo el mundo</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 · El Método Simple para Automatizar Pedidos Gastronómicos · Ebook Digital</p>
+  <p style="margin-top:6px;">Entrega inmediata por correo electrónico · Garantía de satisfacción 7 días</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="cerrarModal()">✕</button>
+    <h3>¡Ya casi es tuyo! 🎉</h3>
+    <p>Completá tus datos y te contactamos por WhatsApp para coordinar el pago y enviarte el ebook al instante.</p>
+    <input type="text" id="modal-name" placeholder="Tu nombre completo" autocomplete="name">
+    <input type="email" id="modal-email" placeholder="Tu correo electrónico" autocomplete="email">
+    <button class="btn-modal-comprar" onclick="comprar('modal')">
+      <svg class="wa-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+      </svg>
+      IR A WHATSAPP Y COMPRAR
+    </button>
+    <p style="font-size:12px;color:#aaa;margin-top:12px;">✉️ Recibirás el ebook inmediatamente en tu mail</p>
+  </div>
+</div>
+
+<script>
+  // ===== COUNTDOWN =====
+  (function() {
+    const end = new Date().getTime() + (3 * 60 * 60 * 1000); // 3 horas
+    function update() {
+      const now = new Date().getTime();
+      const diff = Math.max(0, end - now);
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('cnt-h').textContent = String(h).padStart(2,'0');
+      document.getElementById('cnt-m').textContent = String(m).padStart(2,'0');
+      document.getElementById('cnt-s').textContent = String(s).padStart(2,'0');
+    }
+    update();
+    setInterval(update, 1000);
+  })();
+
+  // ===== STOCK FAKE =====
+  (function() {
+    let stock = 11;
+    setInterval(() => {
+      if (stock > 3) {
+        stock--;
+        document.getElementById('stock-count').textContent = stock;
+      }
+    }, 45000);
+  })();
+
+  // ===== MODAL =====
+  function abrirModal() {
+    document.getElementById('modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    // Track FB Lead event
+    if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout');
+  }
+
+  function cerrarModal() {
+    document.getElementById('modal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) cerrarModal();
+  });
+
+  // ===== COMPRAR =====
+  function comprar(source) {
+    const nombre = source === 'hero'
+      ? document.getElementById('hero-name').value.trim()
+      : document.getElementById('modal-name').value.trim();
+    const email = source === 'hero'
+      ? document.getElementById('hero-email').value.trim()
+      : document.getElementById('modal-email').value.trim();
+
+    if (!nombre) {
+      alert('Por favor ingresá tu nombre para continuar.');
+      return;
+    }
+    if (!email || !email.includes('@')) {
+      alert('Por favor ingresá un correo electrónico válido.');
+      return;
+    }
+
+    // Track FB Purchase Intent
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'AddToCart', { value: 17900, currency: 'ARS' });
+    }
+
+    const producto = 'El Método Simple para Automatizar Pedidos Gastronómicos';
+    const msg = encodeURIComponent(
+      `¡Hola! Quiero comprar el ebook:\n\n` +
+      `📚 *${producto}*\n\n` +
+      `👤 Nombre: ${nombre}\n` +
+      `📧 Mail: ${email}\n\n` +
+      `Por favor indicame cómo proceder con el pago. ¡Gracias!`
+    );
+
+    // Reemplazá este número con el tuyo (sin + ni espacios)
+    const waNumber = '5491165614612';
+    window.open(`https://wa.me/${waNumber}?text=${msg}`, '_blank');
+  }
+
+  // ===== FAQ =====
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+
+</body>
+</html>
